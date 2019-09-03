@@ -1,22 +1,22 @@
 package com.daovu65.employeemanager
 
-import com.daovu65.employeemanager.data.RepositoryImpl
-import com.daovu65.employeemanager.data.RetrofitFactory
-import com.daovu65.employeemanager.domain.interacter.*
-import com.daovu65.employeemanager.ui.Main.MainActivity
-import com.daovu65.employeemanager.ui.Main.MainVMFactory
-import com.daovu65.employeemanager.ui.edit.EditProfileActivity
-import com.daovu65.employeemanager.ui.edit.EditProfileVMFactory
-import com.daovu65.employeemanager.ui.profile.ProfileActivity
-import com.daovu65.employeemanager.ui.profile.ProfileVMFactory
+import com.daovu65.employeeManager.data.RepositoryImpl
+import com.daovu65.employeeManager.data.RetrofitFactory
+import com.daovu65.employeeManager.domain.interacter.*
+import com.daovu65.employeemanager.Main.MainActivity
+import com.daovu65.employeemanager.Main.MainVMFactory
+import com.daovu65.employeemanager.edit.EditProfileActivity
+import com.daovu65.employeemanager.edit.EditProfileVMFactory
+import com.daovu65.employeemanager.profile.ProfileActivity
+import com.daovu65.employeemanager.profile.ProfileVMFactory
 
 object InjectionUtil {
     private val apiService by lazy {
-        RetrofitFactory().getService()
+        com.daovu65.employeeManager.data.RetrofitFactory().getService()
     }
 
     private val repository by lazy {
-        RepositoryImpl(apiService)
+        com.daovu65.employeeManager.data.RepositoryImpl(apiService)
     }
 
     private val getAllEmployee by lazy {

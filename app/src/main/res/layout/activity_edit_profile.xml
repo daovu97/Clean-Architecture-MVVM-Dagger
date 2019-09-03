@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.daovu65.employeemanager.ui.edit.EditProfileViewModel" />
+            type="com.daovu65.employeemanager.edit.EditProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.profile.ProfileActivity">
+        tools:context=".profile.ProfileActivity">
 
         <ImageView
             android:id="@+id/img_profile_edit"
