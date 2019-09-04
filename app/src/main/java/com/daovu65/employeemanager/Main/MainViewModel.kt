@@ -37,9 +37,7 @@ class MainViewModel(
     fun getAllEmployee() = viewModelScope.launch {
         getAllEmployee.invoke { list, throwable ->
             list?.let {
-                _listEmployee.postValue(it.sortedBy { employee ->
-                    employee.name
-                })
+                _listEmployee.postValue(it)
 
             }
             _refressState.postValue(false)
