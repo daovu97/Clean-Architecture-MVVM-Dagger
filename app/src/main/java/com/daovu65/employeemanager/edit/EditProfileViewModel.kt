@@ -109,6 +109,7 @@ class EditProfileViewModel(
 
         newEmployee?.let {
             viewModelScope.launch {
+                delay(1000L)
                 updateEmployee.invoke(it) { employee, throwable ->
                     println(employee.toString())
                     _stateProgressDialog.postValue(false)

@@ -78,8 +78,9 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         btn_save.setOnClickListener {
-            viewModel.updateEmployee()
             updateDialog()
+            viewModel.updateEmployee()
+
         }
     }
 
