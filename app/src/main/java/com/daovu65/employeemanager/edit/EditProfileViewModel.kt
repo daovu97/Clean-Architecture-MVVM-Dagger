@@ -132,6 +132,9 @@ class EditProfileViewModel(
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
+        _state.value = 0
+        _stateAddNewDialog.value = true
+        _stateProgressDialog.value = true
     }
 
 
