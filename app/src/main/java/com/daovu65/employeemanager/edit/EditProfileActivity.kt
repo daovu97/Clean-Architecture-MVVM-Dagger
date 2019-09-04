@@ -144,7 +144,7 @@ class EditProfileActivity : AppCompatActivity() {
         myDialog.setCancelable(false)
         myDialog.setButton(
             DialogInterface.BUTTON_NEGATIVE, "Cancel"
-        ) { dialog, which ->
+        ) { dialog, _ ->
             viewModel.cancelJob()
             dialog.dismiss()
         }

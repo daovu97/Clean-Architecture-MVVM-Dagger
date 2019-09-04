@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBE9E7"
+    android:background="@android:color/white"
     tools:context=".Main.MainActivity">
 
     <TextView
@@ -32,6 +32,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_container"
             android:layout_width="0dp"
+            android:scrollbars="vertical"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
             android:padding="4dp" />
