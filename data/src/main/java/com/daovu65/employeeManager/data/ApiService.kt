@@ -17,19 +17,14 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("create")
-    @FormUrlEncoded
     suspend fun creatEmployee(
-        @Field("name") name: String,
-        @Field("salary") salary: String,
-        @Field("age") age: String
+        @Body createRaw: CreateRaw
     ): CreateRespone
 
     @Headers("Content-Type: application/json")
     @PUT("update/{id}")
     suspend fun updateEmployee(
         @Path("id") id: String,
-        @Field("name") name: String,
-        @Field("salary") salary: String,
-        @Field("age") age: String
+        @Body createRaw: CreateRaw
     ): CreateRespone
 }

@@ -1,5 +1,6 @@
 package com.daovu65.employeemanager.edit
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,6 +37,10 @@ class EditProfileViewModel(
     val stateAddNewDialog: LiveData<Boolean>
         get() = _stateAddNewDialog
 
+    private val _messageResponse = MutableLiveData<String>()
+    val messageResponse: LiveData<String>
+        get() = _messageResponse
+
     val fullName = MutableLiveData<String>()
 
     val age = MutableLiveData<String>()
@@ -45,7 +50,6 @@ class EditProfileViewModel(
         get() = _imageProfile
 
     val salary = MutableLiveData<String>()
-
 
     fun getEmployeeById(id: String) {
         viewModelScope.launch {
@@ -77,8 +81,9 @@ class EditProfileViewModel(
         )
         viewModelScope.launch {
             createEmployee.invoke(newEmployee) { employee, throwable ->
-                println(throwable.toString())
+                Log.d("Creat", employee.toString())
                 _stateAddNewDialog.postValue(false)
+                _messageResponse.postValue(employee.toString())
             }
         }
 
@@ -104,8 +109,9 @@ class EditProfileViewModel(
             viewModelScope.launch {
                 delay(1000L)
                 updateEmployee.invoke(it) { employee, throwable ->
-                    println(employee.toString())
+                    Log.d("Creat", employee.toString())
                     _stateProgressDialog.postValue(false)
+                    _messageResponse.postValue(employee.toString())
                 }
             }
         }
@@ -133,8 +139,9 @@ class EditProfileViewModel(
         super.onCleared()
         viewModelScope.cancel()
         _state.value = 0
-        _stateAddNewDialog.value = true
-        _stateProgressDialog.value = true
+        _stateAddNewDialog.value = null
+        _stateProgressDialog.value = null
+        _messageResponse.value = null
     }
 
 

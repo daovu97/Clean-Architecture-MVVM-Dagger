@@ -41,11 +41,32 @@ data class CreateRespone(
     @SerializedName("name")
     @Expose
     val name: String? = null,
+
     @SerializedName("salary")
     @Expose
     val salary: String? = null,
+
+    @SerializedName("age")
+    @Expose
+    val age: String? = null,
+
+    @SerializedName("id")
+    @Expose
+    val id: String? = null
+)
+
+data class CreateRaw(
+    @SerializedName("name")
+    @Expose
+    val name: String? = null,
+
+    @SerializedName("salary")
+    @Expose
+    val salary: String? = null,
+
     @SerializedName("age")
     @Expose
     val age: String? = null
+
 )
 

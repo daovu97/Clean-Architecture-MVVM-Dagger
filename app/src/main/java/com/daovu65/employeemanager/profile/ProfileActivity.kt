@@ -63,4 +63,12 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        currentStudentId?.let {
+            viewModel.getEmployeeById(it)
+        }
+
+    }
 }

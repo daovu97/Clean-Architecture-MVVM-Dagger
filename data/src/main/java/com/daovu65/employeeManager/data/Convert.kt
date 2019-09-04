@@ -29,4 +29,12 @@ object Convert {
             salary = createRespone.salary
         )
     }
+
+    fun employeeToCreateRaw(employee: Employee): CreateRaw {
+        return CreateRaw(
+            name = employee.name,
+            salary = employee.salary,
+            age = employee.age
+        )
+    }
 }

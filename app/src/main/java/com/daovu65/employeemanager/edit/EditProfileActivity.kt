@@ -55,6 +55,10 @@ class EditProfileActivity : AppCompatActivity() {
                 2 -> editStudentProfile()
             }
         })
+
+        viewModel.messageResponse.observe(this, Observer {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun editStudentProfile() {
