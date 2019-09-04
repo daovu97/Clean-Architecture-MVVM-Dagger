@@ -120,7 +120,7 @@ class EditProfileActivity : AppCompatActivity() {
         viewModel.stateProgressDialog.observe(this, Observer {
             if (it == false && myDialog.isShowing) {
                 myDialog.dismiss()
-                finish()
+                this.finish()
             }
         })
     }
