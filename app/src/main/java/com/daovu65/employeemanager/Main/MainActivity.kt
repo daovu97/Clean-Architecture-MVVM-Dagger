@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.employeemanager.InjectionUtil
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.getAllEmployee()
 
                 withContext(Dispatchers.Main) {
-                    viewModel.refressState.observe(this@MainActivity, Observer {
+                    viewModel.refreshState.observe(this@MainActivity, Observer {
                         if (it == false && swiperefresh.isRefreshing) swiperefresh.isRefreshing =
                             false
                     })

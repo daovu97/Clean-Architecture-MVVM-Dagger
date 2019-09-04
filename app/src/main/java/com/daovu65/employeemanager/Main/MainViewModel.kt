@@ -13,9 +13,9 @@ class MainViewModel(
     private val getAllEmployee: GetAllEmployee
 ) : ViewModel() {
 
-    private val _refressState = MutableLiveData<Boolean>()
-    val refressState: LiveData<Boolean>
-        get() = _refressState
+    private val _refreshState = MutableLiveData<Boolean>()
+    val refreshState: LiveData<Boolean>
+        get() = _refreshState
 
     private val _listEmployee = MutableLiveData<List<Employee>>()
     val listEmployee: LiveData<List<Employee>>
@@ -40,12 +40,14 @@ class MainViewModel(
                 _listEmployee.postValue(it)
 
             }
-            _refressState.postValue(false)
+            _refreshState.postValue(false)
         }
     }
 
     override fun onCleared() {
-        super.onCleared()
         viewModelScope.cancel()
+        _refreshState.value = null
+        super.onCleared()
+
     }
 }
