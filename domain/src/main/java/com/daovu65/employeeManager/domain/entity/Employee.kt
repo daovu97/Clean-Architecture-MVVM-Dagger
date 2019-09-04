@@ -1,13 +1,13 @@
 package com.daovu65.employeeManager.domain.entity
 
 data class Employee(
-    val id: String,
+    val id: String? = null,
 
-    val name: String,
+    val name: String? = null,
 
-    val salary: String,
+    val salary: String? = null,
 
-    val age: String,
+    val age: String? = null,
 
-    val profileImage: String
+    val profileImage: String? = null
 )

@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        swipeToRefresh()
         btn_add_new.setOnClickListener {
             val intent = Intent(this@MainActivity, EditProfileActivity::class.java)
             intent.putExtra(BUNDLE_EDIT_PROFILE, BUNDLE_ADD_NEW)
@@ -55,9 +56,12 @@ class MainActivity : AppCompatActivity() {
         swiperefresh.setOnRefreshListener {
             GlobalScope.launch(Dispatchers.IO) {
                 viewModel.getAllEmployee()
-                delay(1000L)
+
                 withContext(Dispatchers.Main) {
-                    swiperefresh.isRefreshing = false
+                    viewModel.refressState.observe(this@MainActivity, Observer {
+                        if (it == false && swiperefresh.isRefreshing) swiperefresh.isRefreshing =
+                            false
+                    })
                 }
             }
 

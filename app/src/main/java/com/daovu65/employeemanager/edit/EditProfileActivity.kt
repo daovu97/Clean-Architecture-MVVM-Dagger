@@ -6,12 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.daovu65.employeemanager.InjectionUtil
-import com.daovu65.employeemanager.R
 import com.daovu65.employeemanager.databinding.ActivityEditProfileBinding
 import com.daovu65.employeemanager.Main.MainActivity
 import com.daovu65.employeemanager.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.btn_back
+import androidx.appcompat.app.AlertDialog
+import android.content.DialogInterface
+import android.app.ProgressDialog
+import androidx.lifecycle.Observer
+
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -24,7 +28,10 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewModel = viewModelFactory.create(EditProfileViewModel::class.java)
         val binding: ActivityEditProfileBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
+            DataBindingUtil.setContentView(
+                this,
+                com.daovu65.employeemanager.R.layout.activity_edit_profile
+            )
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -63,9 +70,58 @@ class EditProfileActivity : AppCompatActivity() {
                 .into(img_profile_edit)
 
         })
+
+        btn_delete.setOnClickListener {
+            deleteDialog()
+        }
+
+        btn_save.setOnClickListener {
+            viewModel.updateEmployee()
+            updateDialog()
+        }
     }
 
     private fun addNewStudent() {
         btn_delete.visibility = View.GONE
+        btn_save.setOnClickListener {
+            viewModel.createEmployee()
+        }
+    }
+
+    private fun deleteDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Delete employee! Are you sure??")
+        builder.setCancelable(true)
+
+        builder.setPositiveButton("Yes") { dialog, id ->
+            viewModel.deleteEmployee()
+        }
+
+        builder.setNegativeButton("No") { dialog, id ->
+            dialog.cancel()
+        }
+
+        val alert11 = builder.create()
+        alert11.show()
+    }
+
+    private fun updateDialog() {
+        val myDialog = ProgressDialog(this)
+        myDialog.setMessage("Updating...")
+        myDialog.setCancelable(false)
+        myDialog.setButton(
+            DialogInterface.BUTTON_NEGATIVE, "Cancel"
+        ) { dialog, which ->
+            viewModel.cancelJob()
+            dialog.dismiss()
+        }
+        myDialog.show()
+
+        viewModel.stateProgressDialog.observe(this, Observer {
+            if (it == false && myDialog.isShowing) {
+                myDialog.dismiss()
+                finish()
+            }
+        })
     }
 }

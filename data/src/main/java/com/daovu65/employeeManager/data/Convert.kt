@@ -16,10 +16,17 @@ object Convert {
 
     fun employeeToEmployeeEntity(employee: Employee): EmployeeEntity {
         return EmployeeEntity(
-            id = employee.id,
             employeeName = employee.name,
             employeeAge = employee.age,
             employeeSalary = employee.salary
+        )
+    }
+
+    fun createResponeToEmployee(createRespone: CreateRespone): Employee {
+        return Employee(
+            name = createRespone.name,
+            age = createRespone.age,
+            salary = createRespone.salary
         )
     }
 }

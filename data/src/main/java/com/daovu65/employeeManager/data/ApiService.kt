@@ -13,12 +13,23 @@ interface ApiService {
     suspend fun getEmployee(@Path("id") id: String): EmployeeEntity
 
     @DELETE("delete/{id}")
-    suspend fun deleteEmployee(@Path("id") id: String)
+    suspend fun deleteEmployee(@Path("id") id: String): DeleteResponse
 
     @Headers("Content-Type: application/json")
     @POST("create")
-    suspend fun creatEmployee(employeeEntity: EmployeeEntity)
+    @FormUrlEncoded
+    suspend fun creatEmployee(
+        @Field("name") name: String,
+        @Field("salary") salary: String,
+        @Field("age") age: String
+    ): CreateRespone
 
+    @Headers("Content-Type: application/json")
     @PUT("update/{id}")
-    suspend fun updateEmployee(@Path("id") id: String)
+    suspend fun updateEmployee(
+        @Path("id") id: String,
+        @Field("name") name: String,
+        @Field("salary") salary: String,
+        @Field("age") age: String
+    ): CreateRespone
 }

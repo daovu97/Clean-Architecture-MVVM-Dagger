@@ -10,6 +10,24 @@ import kotlinx.coroutines.withContext
 class RepositoryImpl(
     private val apiService: ApiService
 ) : Repository {
+    override suspend fun createEmployee(
+        employee: Employee,
+        result: (Employee?, Throwable?) -> Unit
+    ): Job = withContext(Dispatchers.IO) {
+        launch {
+            try {
+                val value = apiService.creatEmployee(
+                    employee.name!!.trim(),
+                    employee.salary!!.trim(),
+                    employee.age!!.trim()
+                )
+                result(Convert.createResponeToEmployee(value), null)
+            } catch (e: Throwable) {
+                result(null, e)
+            }
+        }
+    }
+
     override suspend fun getEmployeeById(id: String, result: (Employee?, Throwable?) -> Unit): Job =
         withContext(Dispatchers.IO) {
             launch {
@@ -17,58 +35,46 @@ class RepositoryImpl(
                     result(
                         Convert.employeeEntityToEmployee(
                             apiService.getEmployee(id)
-                        ), null)
+                        ), null
+                    )
                 } catch (e: Throwable) {
                     result(null, e)
                 }
             }
         }
 
-    override suspend fun createEmployee(
-        employee: Employee,
-        result: (Boolean, Throwable?) -> Unit
-    ): Job = withContext(Dispatchers.IO) {
-        launch {
-            try {
-                apiService.creatEmployee(
-                    Convert.employeeToEmployeeEntity(
-                        employee
-                    )
-                )
-                result(true, null)
-            } catch (e: Throwable) {
-                result(false, e)
-            }
-        }
-    }
-
     override suspend fun deleteEmployee(
         id: String,
-        result: (Boolean, Throwable?) -> Unit
+        result: (String?, Throwable?) -> Unit
     ): Job = withContext(Dispatchers.IO) {
         launch {
             try {
-                apiService.deleteEmployee(id)
-                result(true, null)
+                val value = apiService.deleteEmployee(id)
+                value.success?.let {
+                    result(it.text, null)
+                }
+
             } catch (e: Throwable) {
-                result(false, e)
+                result(null, e)
             }
         }
     }
 
     override suspend fun updateEmployee(
         employee: Employee,
-        result: (Boolean, Throwable?) -> Unit
+        result: (Employee?, Throwable?) -> Unit
     ): Job = withContext(Dispatchers.IO) {
         launch {
             try {
-                apiService.updateEmployee(
-                    Convert.employeeToEmployeeEntity(
-                        employee
-                    ).id!!)
-                result(true, null)
+                val value = apiService.updateEmployee(
+                    Convert.employeeToEmployeeEntity(employee).id!!,
+                    employee.name!!,
+                    employee.salary!!,
+                    employee.age!!
+                )
+                result(Convert.createResponeToEmployee(value), null)
             } catch (e: Throwable) {
-                result(false, e)
+                result(null, e)
             }
         }
     }

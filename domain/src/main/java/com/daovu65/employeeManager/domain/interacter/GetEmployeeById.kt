@@ -5,8 +5,8 @@ import com.daovu65.employeeManager.domain.repository.Repository
 
 class GetEmployeeById constructor(private val repository: Repository) {
     suspend fun invoke(id: String, result: (Employee?, Throwable?) -> Unit) {
-        repository.getEmployeeById(id) { employee, throwable ->
-            result(employee, throwable)
+        repository.getEmployeeById(id) { employ, throwable ->
+            result(employ, throwable)
         }
     }
 }

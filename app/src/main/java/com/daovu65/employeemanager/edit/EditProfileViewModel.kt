@@ -9,8 +9,7 @@ import com.daovu65.employeeManager.domain.interacter.CreateEmployee
 import com.daovu65.employeeManager.domain.interacter.DeleteEmployee
 import com.daovu65.employeeManager.domain.interacter.GetEmployeeById
 import com.daovu65.employeeManager.domain.interacter.UpdateEmployee
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class EditProfileViewModel(
     private val updateEmployee: UpdateEmployee,
@@ -18,6 +17,10 @@ class EditProfileViewModel(
     private val createEmployee: CreateEmployee,
     private val getEmployeeById: GetEmployeeById
 ) : ViewModel() {
+
+    private val deleteJob = Job()
+    private val ioScope = CoroutineScope(Dispatchers.IO + deleteJob)
+
     private var currentEmployee: Employee? = null
 
     private val _liveEmployee = MutableLiveData<Employee>()
@@ -27,7 +30,9 @@ class EditProfileViewModel(
     val state: LiveData<Int>
         get() = _state
 
-    val firstName = MutableLiveData<String>()
+    private val _stateProgressDialog = MutableLiveData<Boolean>()
+    val stateProgressDialog: LiveData<Boolean>
+        get() = _stateProgressDialog
 
     private val _currentEmployeeId = MutableLiveData<String>()
     val currentEmployeeId: LiveData<String>
@@ -48,6 +53,7 @@ class EditProfileViewModel(
         viewModelScope.launch {
             getEmployeeById.invoke(id) { employee, throwable ->
                 employee?.let {
+                    currentEmployee = it
                     _liveEmployee.postValue(it)
                     _currentEmployeeId.postValue(it.id)
                     fullName.postValue(it.name)
@@ -58,6 +64,70 @@ class EditProfileViewModel(
 
             }
         }
+    }
+
+    fun createEmployee() {
+        val inputName = fullName.value ?: ""
+        if (inputName.isBlank() || inputName.isEmpty()) return
+        val inputAge = age.value ?: "0"
+        val inputSalary = salary.value ?: ""
+        val newEmployee = Employee(
+            id = null,
+            name = inputName,
+            age = inputAge,
+            salary = inputSalary,
+            profileImage = null
+        )
+        viewModelScope.launch {
+            createEmployee.invoke(newEmployee) { employee, throwable ->
+                println(throwable.toString())
+            }
+        }
+
+    }
+
+    fun updateEmployee() {
+        var newEmployee: Employee? = null
+        val inputName = fullName.value ?: ""
+        if (inputName.isBlank() || inputName.isEmpty()) return
+        val inputAge = age.value ?: "0"
+        val inputSalary = salary.value ?: ""
+        currentEmployee?.let {
+            newEmployee = Employee(
+                id = it.id,
+                name = inputName,
+                age = inputAge,
+                salary = inputSalary,
+                profileImage = null
+            )
+        }
+
+        newEmployee?.let {
+            viewModelScope.launch {
+                createEmployee.invoke(it) { employee, throwable ->
+                    println(employee.toString())
+                    _stateProgressDialog.postValue(false)
+                }
+            }
+        }
+
+
+    }
+
+
+    fun deleteEmployee() {
+        viewModelScope.launch {
+            currentEmployee?.let {
+                deleteEmployee.invoke(it.id!!) { success, error ->
+                    println(success.toString())
+                }
+            }
+        }
+
+    }
+
+    fun cancelJob() {
+        viewModelScope.cancel()
     }
 
     override fun onCleared() {

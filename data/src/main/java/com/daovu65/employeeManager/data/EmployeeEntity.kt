@@ -24,3 +24,28 @@ data class EmployeeEntity(
     @Expose
     val profileImage: String? = null
 )
+
+data class DeleteResponse(
+    @SerializedName("success")
+    @Expose
+    val success: Success? = null
+)
+
+data class Success(
+    @SerializedName("text")
+    @Expose
+    val text: String
+)
+
+data class CreateRespone(
+    @SerializedName("name")
+    @Expose
+    val name: String? = null,
+    @SerializedName("salary")
+    @Expose
+    val salary: String? = null,
+    @SerializedName("age")
+    @Expose
+    val age: String? = null
+)
+

@@ -8,11 +8,11 @@ interface Repository {
 
     suspend fun getEmployeeById(id: String, result: (Employee?, Throwable?) -> Unit): Job
 
-    suspend fun createEmployee(employee: Employee, result: (Boolean, Throwable?) -> Unit): Job
+    suspend fun createEmployee(employee: Employee, result: (Employee?, Throwable?) -> Unit): Job
 
-    suspend fun deleteEmployee(id: String, result: (Boolean, Throwable?) -> Unit): Job
+    suspend fun deleteEmployee(id: String, result: (String?, Throwable?) -> Unit): Job
 
-    suspend fun updateEmployee(employee: Employee, result: (Boolean, Throwable?) -> Unit): Job
+    suspend fun updateEmployee(employee: Employee, result: (Employee?, Throwable?) -> Unit): Job
 
 }
 
