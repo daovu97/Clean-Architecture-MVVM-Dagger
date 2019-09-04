@@ -30,8 +30,9 @@ object Convert {
         )
     }
 
-    fun employeeToCreateRaw(employee: Employee): CreateRaw {
-        return CreateRaw(
+
+    fun employeeToCreateResponse(employee: Employee): CreateRespone {
+        return CreateRespone(
             name = employee.name,
             salary = employee.salary,
             age = employee.age

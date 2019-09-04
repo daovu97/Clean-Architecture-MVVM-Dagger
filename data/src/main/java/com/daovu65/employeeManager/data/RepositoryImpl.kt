@@ -16,7 +16,7 @@ class RepositoryImpl(
     ): Job = withContext(Dispatchers.IO) {
         launch {
             try {
-                val value = apiService.creatEmployee(Convert.employeeToCreateRaw(employee))
+                val value = apiService.creatEmployee(Convert.employeeToCreateResponse(employee))
                 result(Convert.createResponeToEmployee(value), null)
             } catch (e: Throwable) {
                 result(null, e)
@@ -63,7 +63,8 @@ class RepositoryImpl(
         launch {
             try {
                 employee.id?.let {
-                    val value = apiService.updateEmployee(it, Convert.employeeToCreateRaw(employee))
+                    val value =
+                        apiService.updateEmployee(it, Convert.employeeToCreateResponse(employee))
                     result(Convert.createResponeToEmployee(value), null)
                 }
 
