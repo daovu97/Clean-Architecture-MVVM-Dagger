@@ -17,14 +17,9 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("create")
-    suspend fun creatEmployee(
-        @Body createRespone: CreateRespone
-    ): CreateRespone
+    suspend fun creatEmployee(@Body createRespone: CreateRespone): CreateRespone
 
     @Headers("Content-Type: application/json")
     @PUT("update/{id}")
-    suspend fun updateEmployee(
-        @Path("id") id: String,
-        @Body createRespone: CreateRespone
-    ): CreateRespone
+    suspend fun updateEmployee(@Path("id") id: String, @Body createRespone: CreateRespone): CreateRespone
 }
