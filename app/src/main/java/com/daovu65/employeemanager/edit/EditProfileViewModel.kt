@@ -34,6 +34,10 @@ class EditProfileViewModel(
     val stateProgressDialog: LiveData<Boolean>
         get() = _stateProgressDialog
 
+    private val _stateAddNewDialog = MutableLiveData<Boolean>()
+    val stateAddNewDialog: LiveData<Boolean>
+        get() = _stateAddNewDialog
+
     private val _currentEmployeeId = MutableLiveData<String>()
     val currentEmployeeId: LiveData<String>
         get() = _currentEmployeeId
@@ -81,6 +85,7 @@ class EditProfileViewModel(
         viewModelScope.launch {
             createEmployee.invoke(newEmployee) { employee, throwable ->
                 println(throwable.toString())
+                _stateAddNewDialog.postValue(false)
             }
         }
 

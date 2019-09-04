@@ -85,7 +85,22 @@ class EditProfileActivity : AppCompatActivity() {
         btn_delete.visibility = View.GONE
         btn_save.setOnClickListener {
             viewModel.createEmployee()
+            addNewDialog()
         }
+    }
+
+    private fun addNewDialog() {
+        val myDialog = ProgressDialog(this)
+        myDialog.setMessage("Creating...")
+        myDialog.setCancelable(false)
+        myDialog.show()
+
+        viewModel.stateAddNewDialog.observe(this, Observer {
+            if (it == false && myDialog.isShowing) {
+                myDialog.dismiss()
+                this.finish()
+            }
+        })
     }
 
     private fun deleteDialog() {
@@ -95,6 +110,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         builder.setPositiveButton("Yes") { dialog, id ->
             viewModel.deleteEmployee()
+            this.finish()
         }
 
         builder.setNegativeButton("No") { dialog, id ->
