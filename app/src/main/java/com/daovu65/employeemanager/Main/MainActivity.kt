@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         edt_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                if (p0.toString().isBlank()) viewModel.getAllEmployee()
+                if (p0.isNullOrEmpty()) viewModel.getAllEmployee()
                 else viewModel.searchEmployeeByName(p0.toString())
             }
 
