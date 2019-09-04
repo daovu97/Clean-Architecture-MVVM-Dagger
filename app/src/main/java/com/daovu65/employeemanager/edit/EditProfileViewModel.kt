@@ -18,14 +18,12 @@ class EditProfileViewModel(
     private val getEmployeeById: GetEmployeeById
 ) : ViewModel() {
 
-    private val deleteJob = Job()
-    private val ioScope = CoroutineScope(Dispatchers.IO + deleteJob)
-
     private var currentEmployee: Employee? = null
 
     private val _liveEmployee = MutableLiveData<Employee>()
     val liveEmployee: LiveData<Employee>
         get() = _liveEmployee
+
     private val _state = MutableLiveData<Int>()
     val state: LiveData<Int>
         get() = _state
@@ -37,10 +35,6 @@ class EditProfileViewModel(
     private val _stateAddNewDialog = MutableLiveData<Boolean>()
     val stateAddNewDialog: LiveData<Boolean>
         get() = _stateAddNewDialog
-
-    private val _currentEmployeeId = MutableLiveData<String>()
-    val currentEmployeeId: LiveData<String>
-        get() = _currentEmployeeId
 
     val fullName = MutableLiveData<String>()
 
@@ -59,7 +53,6 @@ class EditProfileViewModel(
                 employee?.let {
                     currentEmployee = it
                     _liveEmployee.postValue(it)
-                    _currentEmployeeId.postValue(it.id)
                     fullName.postValue(it.name)
                     age.postValue(it.age)
                     _imageProfile.postValue(it.profileImage)
