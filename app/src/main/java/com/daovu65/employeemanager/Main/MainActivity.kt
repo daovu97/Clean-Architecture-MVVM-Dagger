@@ -3,6 +3,8 @@ package com.daovu65.employeemanager.Main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.employeemanager.InjectionUtil
@@ -43,6 +45,18 @@ class MainActivity : AppCompatActivity() {
                 mAdapter.submitValue(it)
             })
         }
+
+        edt_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.toString().isBlank()) viewModel.getAllEmployee()
+                else viewModel.searchEmployeeByName(p0.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        })
 
         swipeToRefresh()
         btn_add_new.setOnClickListener {

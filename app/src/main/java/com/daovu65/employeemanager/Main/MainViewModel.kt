@@ -21,6 +21,19 @@ class MainViewModel(
     val listEmployee: LiveData<List<Employee>>
         get() = _listEmployee
 
+    fun searchEmployeeByName(name: String) {
+        viewModelScope.launch {
+            getAllEmployee.invoke { list, throwable ->
+                list?.let {
+                    _listEmployee.postValue(it.filter { employee ->
+                        employee.name == name
+                    })
+                }
+
+            }
+        }
+    }
+
     fun getAllEmployee() = viewModelScope.launch {
         getAllEmployee.invoke { list, throwable ->
             list?.let {
@@ -29,7 +42,6 @@ class MainViewModel(
             }
             _refressState.postValue(false)
         }
-
     }
 
     override fun onCleared() {

@@ -23,11 +23,11 @@
         android:id="@+id/swiperefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/edt_search">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_container"
@@ -51,5 +51,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@android:string/search_go"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/btn_add_new"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
