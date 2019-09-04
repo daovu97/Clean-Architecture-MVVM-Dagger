@@ -11,6 +11,7 @@ import com.daovu65.employeemanager.R
 import com.daovu65.employeemanager.databinding.ActivityProfileBinding
 import com.daovu65.employeemanager.Main.MainActivity
 import com.daovu65.employeemanager.edit.EditProfileActivity
+import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class ProfileActivity : AppCompatActivity() {
         viewModel = viewModelFactory.create(ProfileViewModel::class.java)
         val binding: ActivityProfileBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_profile)
+        StatusBarUtil.setTransparent(this)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

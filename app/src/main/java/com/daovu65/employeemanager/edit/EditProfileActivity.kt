@@ -17,6 +17,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.jaeger.library.StatusBarUtil
 
 
 class EditProfileActivity : AppCompatActivity() {
@@ -32,8 +33,8 @@ class EditProfileActivity : AppCompatActivity() {
         val binding: ActivityEditProfileBinding =
             DataBindingUtil.setContentView(
                 this,
-                com.daovu65.employeemanager.R.layout.activity_edit_profile
-            )
+                com.daovu65.employeemanager.R.layout.activity_edit_profile)
+        StatusBarUtil.setTransparent(this)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

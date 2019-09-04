@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.employeemanager.InjectionUtil
@@ -12,6 +13,7 @@ import com.daovu65.employeemanager.MainAdapter
 import com.daovu65.employeemanager.R
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.daovu65.employeemanager.profile.ProfileActivity
+import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
@@ -30,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         InjectionUtil.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        StatusBarUtil.setTransparent(this)
         viewModel = viewModelFactory.create(MainViewModel::class.java)
-
         recycler_container.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             mAdapter = MainAdapter(this@MainActivity) {
