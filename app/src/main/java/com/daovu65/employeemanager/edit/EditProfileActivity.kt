@@ -33,8 +33,9 @@ class EditProfileActivity : AppCompatActivity() {
         val binding: ActivityEditProfileBinding =
             DataBindingUtil.setContentView(
                 this,
-                com.daovu65.employeemanager.R.layout.activity_edit_profile)
-        StatusBarUtil.setTransparent(this)
+                com.daovu65.employeemanager.R.layout.activity_edit_profile
+            )
+        StatusBarUtil.setTranslucent(this, 30)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         InjectionUtil.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        StatusBarUtil.setTransparent(this)
+        StatusBarUtil.setTranslucent(this,30)
         viewModel = viewModelFactory.create(MainViewModel::class.java)
         recycler_container.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
