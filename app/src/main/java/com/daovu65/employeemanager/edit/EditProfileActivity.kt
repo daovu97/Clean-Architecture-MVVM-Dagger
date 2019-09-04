@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_profile.btn_back
 import androidx.appcompat.app.AlertDialog
 import android.content.DialogInterface
 import android.app.ProgressDialog
+import android.content.Intent
+import android.widget.Toast
 import androidx.lifecycle.Observer
 
 
@@ -110,6 +112,15 @@ class EditProfileActivity : AppCompatActivity() {
 
         builder.setPositiveButton("Yes") { dialog, id ->
             viewModel.deleteEmployee()
+            val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+            Toast.makeText(
+                this@EditProfileActivity,
+                "Deleted!!",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            this.startActivity(intent)
             this.finish()
         }
 

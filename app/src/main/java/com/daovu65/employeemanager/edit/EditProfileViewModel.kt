@@ -109,7 +109,7 @@ class EditProfileViewModel(
 
         newEmployee?.let {
             viewModelScope.launch {
-                createEmployee.invoke(it) { employee, throwable ->
+                updateEmployee.invoke(it) { employee, throwable ->
                     println(employee.toString())
                     _stateProgressDialog.postValue(false)
                 }

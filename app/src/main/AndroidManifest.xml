@@ -11,8 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.daovu65.employeemanager.profile.ProfileActivity"></activity>
-        <activity android:name="com.daovu65.employeemanager.edit.EditProfileActivity" />
+        <activity
+            android:name="com.daovu65.employeemanager.profile.ProfileActivity"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name="com.daovu65.employeemanager.edit.EditProfileActivity"
+            android:launchMode="singleTask" />
         <activity android:name="com.daovu65.employeemanager.Main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
