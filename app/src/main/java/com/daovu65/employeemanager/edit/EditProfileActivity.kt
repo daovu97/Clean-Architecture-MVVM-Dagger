@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.daovu65.employeemanager.edit
 
 import android.os.Bundle
@@ -110,7 +112,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         }
     }
-
 
     private fun deleteDialog() {
         alertDialog("Delete employee! Are you sure??",
