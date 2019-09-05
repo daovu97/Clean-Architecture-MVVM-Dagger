@@ -1,5 +1,7 @@
-package com.daovu65.employeeManager.data
+package com.daovu65.employeeManager.data.repository
 
+import com.daovu65.employeeManager.data.service.ApiService
+import com.daovu65.employeeManager.data.mapper.Convert
 import com.daovu65.employeeManager.domain.entity.Employee
 import com.daovu65.employeeManager.domain.repository.Repository
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +18,11 @@ class RepositoryImpl(
     ): Job = withContext(Dispatchers.IO) {
         launch {
             try {
-                val value = apiService.creatEmployee(Convert.employeeToCreateResponse(employee))
+                val value = apiService.creatEmployee(
+                    Convert.employeeToCreateResponse(
+                        employee
+                    )
+                )
                 result(Convert.createResponeToEmployee(value), null)
             } catch (e: Throwable) {
                 result(null, e)
@@ -64,7 +70,11 @@ class RepositoryImpl(
             try {
                 employee.id?.let {
                     val value =
-                        apiService.updateEmployee(it, Convert.employeeToCreateResponse(employee))
+                        apiService.updateEmployee(it,
+                            Convert.employeeToCreateResponse(
+                                employee
+                            )
+                        )
                     result(Convert.createResponeToEmployee(value), null)
                 }
 

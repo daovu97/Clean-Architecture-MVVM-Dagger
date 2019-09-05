@@ -1,7 +1,7 @@
 package com.daovu65.employeemanager
 
-import com.daovu65.employeeManager.data.RepositoryImpl
-import com.daovu65.employeeManager.data.RetrofitFactory
+import com.daovu65.employeeManager.data.repository.RepositoryImpl
+import com.daovu65.employeeManager.data.service.RetrofitFactory
 import com.daovu65.employeeManager.domain.interacter.*
 import com.daovu65.employeemanager.Main.MainActivity
 import com.daovu65.employeemanager.Main.MainVMFactory
@@ -12,11 +12,11 @@ import com.daovu65.employeemanager.profile.ProfileVMFactory
 
 object InjectionUtil {
     private val apiService by lazy {
-        com.daovu65.employeeManager.data.RetrofitFactory().getService()
+        RetrofitFactory().getService()
     }
 
     private val repository by lazy {
-        com.daovu65.employeeManager.data.RepositoryImpl(apiService)
+        RepositoryImpl(apiService)
     }
 
     private val getAllEmployee by lazy {

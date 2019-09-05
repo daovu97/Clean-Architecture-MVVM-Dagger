@@ -1,4 +1,4 @@
-package com.daovu65.employeeManager.data
+package com.daovu65.employeeManager.data.service
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

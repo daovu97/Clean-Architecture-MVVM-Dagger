@@ -1,4 +1,4 @@
-package com.daovu65.employeeManager.data
+package com.daovu65.employeeManager.data.entity
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

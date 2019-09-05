@@ -1,5 +1,8 @@
-package com.daovu65.employeeManager.data
+package com.daovu65.employeeManager.data.service
 
+import com.daovu65.employeeManager.data.entity.CreateRespone
+import com.daovu65.employeeManager.data.entity.DeleteResponse
+import com.daovu65.employeeManager.data.entity.EmployeeEntity
 import retrofit2.http.*
 
 interface ApiService {
