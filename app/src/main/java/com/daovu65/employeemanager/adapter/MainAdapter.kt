@@ -1,4 +1,4 @@
-package com.daovu65.employeemanager
+package com.daovu65.employeemanager.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.daovu65.employeeManager.domain.entity.Employee
+import com.daovu65.employeemanager.R
 
 class MainAdapter(
     private val context: Context,
