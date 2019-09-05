@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.daovu65.employeeManager.domain.entity.Employee
 import com.daovu65.employeeManager.domain.interacter.GetAllEmployee
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
@@ -24,11 +25,14 @@ class MainViewModel(
     fun searchEmployeeByName(name: String) {
         viewModelScope.launch {
             getAllEmployee.invoke { list, throwable ->
-                list?.let {
-                    _listEmployee.postValue(it.filter { employee ->
-                        employee.name == name
-                    })
+                launch(Dispatchers.Default) {
+                    list?.let {
+                        _listEmployee.postValue(it.filter { employee ->
+                            employee.name == name
+                        })
+                    }
                 }
+
 
             }
         }
