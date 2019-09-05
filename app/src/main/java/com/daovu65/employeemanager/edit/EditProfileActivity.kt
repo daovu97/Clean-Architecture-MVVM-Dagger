@@ -94,68 +94,100 @@ class EditProfileActivity : AppCompatActivity() {
         btn_delete.visibility = View.GONE
         btn_save.setOnClickListener {
             viewModel.createEmployee()
-            addNewDialog()
+            progressDialog("Creating",
+                onCancelClick = {
+                    viewModel.cancelJob()
+                },
+                onSuccess = { dialog ->
+                    viewModel.stateAddNewDialog.observe(this, Observer {
+                        if (it == false) {
+                            dialog.dismiss()
+                            this.finish()
+                        }
+                    })
+                })
+
         }
     }
 
-    private fun addNewDialog() {
-        val myDialog = ProgressDialog(this)
-        myDialog.setMessage("Creating...")
-        myDialog.setCancelable(false)
-        myDialog.show()
-
-        viewModel.stateAddNewDialog.observe(this, Observer {
-            if (it == false && myDialog.isShowing) {
-                myDialog.dismiss()
-                this.finish()
-            }
-        })
-    }
 
     private fun deleteDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage("Delete employee! Are you sure??")
-        builder.setCancelable(true)
+        alertDialog("Delete employee! Are you sure??",
+            onYesClick = {
+                progressDialog("Deleting",
+                    onSuccess = { dialog ->
+                        viewModel.deleteEmployee()
+                        viewModel.stateDeleteDialog.observe(this, Observer {
+                            it?.let {
+                                dialog.dismiss()
+                                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+                                val intent =
+                                    Intent(this@EditProfileActivity, MainActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                this.startActivity(intent)
+                                this.finish()
+                            }
+                        })
+                    },
+                    onCancelClick = {
+                        viewModel.cancelJob()
+                    })
+            },
+            onNoClick = {
+                it.dismiss()
+            })
+    }
 
-        builder.setPositiveButton("Yes") { dialog, id ->
-            viewModel.deleteEmployee()
-            val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-            Toast.makeText(
-                this@EditProfileActivity,
-                "Deleted!!",
-                Toast.LENGTH_SHORT
-            )
-                .show()
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            this.startActivity(intent)
-            this.finish()
+    private fun updateDialog() {
+        progressDialog("Updating",
+            onSuccess = { dialog ->
+                viewModel.stateProgressDialog.observe(this, Observer {
+                    if (it == false) {
+                        dialog.dismiss()
+                        this.finish()
+                    }
+                })
+            },
+            onCancelClick = {
+                viewModel.cancelJob()
+                it.dismiss()
+            })
+
+
+    }
+
+    private fun progressDialog(
+        msg: String,
+        onSuccess: (DialogInterface) -> Unit,
+        onCancelClick: (DialogInterface) -> Unit
+    ) {
+        val myDialog = ProgressDialog(this)
+        myDialog.setMessage("$msg...")
+        myDialog.setCancelable(false)
+        myDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel") { dialog, _ ->
+            onCancelClick(dialog)
+        }
+        myDialog.show()
+        onSuccess(myDialog)
+    }
+
+    private fun alertDialog(
+        msg: String,
+        onYesClick: (DialogInterface) -> Unit,
+        onNoClick: (DialogInterface) -> Unit
+    ) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(msg)
+        builder.setCancelable(true)
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            onYesClick(dialog)
         }
 
-        builder.setNegativeButton("No") { dialog, id ->
-            dialog.cancel()
+        builder.setNegativeButton("No") { dialog, _ ->
+            onNoClick(dialog)
         }
 
         val alert11 = builder.create()
         alert11.show()
-    }
-
-    private fun updateDialog() {
-        val myDialog = ProgressDialog(this)
-        myDialog.setMessage("Updating...")
-        myDialog.setCancelable(false)
-        myDialog.setButton(
-            DialogInterface.BUTTON_NEGATIVE, "Cancel"
-        ) { dialog, _ ->
-            viewModel.cancelJob()
-            dialog.dismiss()
-        }
-        myDialog.show()
-
-        viewModel.stateProgressDialog.observe(this, Observer {
-            if (it == false && myDialog.isShowing) {
-                myDialog.dismiss()
-                this.finish()
-            }
-        })
     }
 }

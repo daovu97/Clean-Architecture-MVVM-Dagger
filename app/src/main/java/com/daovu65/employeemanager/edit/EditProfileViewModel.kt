@@ -37,6 +37,10 @@ class EditProfileViewModel(
     val stateAddNewDialog: LiveData<Boolean>
         get() = _stateAddNewDialog
 
+    private val _stateDeleteDialog = MutableLiveData<String>()
+    val stateDeleteDialog: LiveData<String>
+        get() = _stateDeleteDialog
+
     private val _messageResponse = MutableLiveData<String>()
     val messageResponse: LiveData<String>
         get() = _messageResponse
@@ -80,6 +84,7 @@ class EditProfileViewModel(
             profileImage = null
         )
         viewModelScope.launch {
+            delay(1000L)
             createEmployee.invoke(newEmployee) { employee, throwable ->
                 Log.d("Creat", employee.toString())
                 _stateAddNewDialog.postValue(false)
@@ -122,9 +127,10 @@ class EditProfileViewModel(
 
     fun deleteEmployee() {
         viewModelScope.launch {
+            delay(1000L)
             currentEmployee?.let {
                 deleteEmployee.invoke(it.id!!) { success, error ->
-                    println(success.toString())
+                    _stateDeleteDialog.postValue(success)
                 }
             }
         }
@@ -142,6 +148,7 @@ class EditProfileViewModel(
         _stateAddNewDialog.value = null
         _stateProgressDialog.value = null
         _messageResponse.value = null
+        _stateDeleteDialog.value = null
     }
 
 
