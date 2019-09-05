@@ -31,8 +31,15 @@ class MainActivity : AppCompatActivity() {
         InjectionUtil.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        StatusBarUtil.setTranslucent(this,30)
         viewModel = viewModelFactory.create(MainViewModel::class.java)
+        initView()
+        searchByName()
+        swipeToRefresh()
+
+    }
+
+    private fun initView() {
+        StatusBarUtil.setTranslucent(this, 30)
         recycler_container.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             mAdapter = MainAdapter(this@MainActivity) {
@@ -46,20 +53,6 @@ class MainActivity : AppCompatActivity() {
                 mAdapter.submitValue(it)
             })
         }
-
-        edt_search.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                if (p0.isNullOrEmpty()) viewModel.getAllEmployee()
-                else viewModel.searchEmployeeByName(p0.toString())
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-        })
-
-        swipeToRefresh()
         btn_add_new.setOnClickListener {
             val intent = Intent(this@MainActivity, EditProfileActivity::class.java)
             intent.putExtra(BUNDLE_EDIT_PROFILE, BUNDLE_ADD_NEW)
@@ -81,6 +74,20 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun searchByName() {
+        edt_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.isNullOrEmpty()) viewModel.getAllEmployee()
+                else viewModel.searchEmployeeByName(p0.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        })
     }
 
     override fun onResume() {

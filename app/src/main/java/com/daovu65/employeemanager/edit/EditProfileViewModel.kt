@@ -25,9 +25,19 @@ class EditProfileViewModel(
     val liveEmployee: LiveData<Employee>
         get() = _liveEmployee
 
-    private val _state = MutableLiveData<Int>()
-    val state: LiveData<Int>
-        get() = _state
+    private val _stateEdit = MutableLiveData<Int>()
+    val stateEdit: LiveData<Int>
+        get() = _stateEdit
+
+    val fullName = MutableLiveData<String>()
+
+    val age = MutableLiveData<String>()
+
+    private val _imageProfile = MutableLiveData<String>()
+    val imageProfile: LiveData<String>
+        get() = _imageProfile
+
+    val salary = MutableLiveData<String>()
 
     private val _stateUpdateDialog = MutableLiveData<String>()
     val stateUpdateDialog: LiveData<String>
@@ -40,16 +50,6 @@ class EditProfileViewModel(
     private val _stateDeleteDialog = MutableLiveData<String>()
     val stateDeleteDialog: LiveData<String>
         get() = _stateDeleteDialog
-
-    val fullName = MutableLiveData<String>()
-
-    val age = MutableLiveData<String>()
-
-    private val _imageProfile = MutableLiveData<String>()
-    val imageProfile: LiveData<String>
-        get() = _imageProfile
-
-    val salary = MutableLiveData<String>()
 
     fun getEmployeeById(id: String) {
         viewModelScope.launch {
@@ -115,7 +115,6 @@ class EditProfileViewModel(
             }
         }
 
-
     }
 
 
@@ -138,7 +137,7 @@ class EditProfileViewModel(
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
-        _state.value = 0
+        _stateEdit.value = 0
         _stateAddNewDialog.value = null
         _stateUpdateDialog.value = null
         _stateDeleteDialog.value = null
@@ -146,8 +145,7 @@ class EditProfileViewModel(
 
 
     fun setState(instate: Int) {
-        _state.value = instate
+        _stateEdit.value = instate
     }
-
 
 }

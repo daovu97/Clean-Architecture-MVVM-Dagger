@@ -37,11 +37,14 @@ class EditProfileActivity : AppCompatActivity() {
                 this,
                 com.daovu65.employeemanager.R.layout.activity_edit_profile
             )
-        StatusBarUtil.setTranslucent(this, 30)
-
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        initView()
+        
+    }
 
+    private fun initView() {
+        StatusBarUtil.setTranslucent(this, 30)
         intent.extras?.let { bundle ->
             when (bundle.get(MainActivity.BUNDLE_EDIT_PROFILE)) {
                 MainActivity.BUNDLE_ADD_NEW -> viewModel.setState(1)
@@ -53,13 +56,12 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel.state.observe(this, androidx.lifecycle.Observer {
+        viewModel.stateEdit.observe(this, androidx.lifecycle.Observer {
             when (it) {
                 1 -> addNewStudent()
                 2 -> editStudentProfile()
             }
         })
-
     }
 
     private fun editStudentProfile() {
