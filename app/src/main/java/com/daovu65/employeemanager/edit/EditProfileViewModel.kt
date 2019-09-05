@@ -29,21 +29,17 @@ class EditProfileViewModel(
     val state: LiveData<Int>
         get() = _state
 
-    private val _stateProgressDialog = MutableLiveData<Boolean>()
-    val stateProgressDialog: LiveData<Boolean>
-        get() = _stateProgressDialog
+    private val _stateUpdateDialog = MutableLiveData<String>()
+    val stateUpdateDialog: LiveData<String>
+        get() = _stateUpdateDialog
 
-    private val _stateAddNewDialog = MutableLiveData<Boolean>()
-    val stateAddNewDialog: LiveData<Boolean>
+    private val _stateAddNewDialog = MutableLiveData<String>()
+    val stateAddNewDialog: LiveData<String>
         get() = _stateAddNewDialog
 
     private val _stateDeleteDialog = MutableLiveData<String>()
     val stateDeleteDialog: LiveData<String>
         get() = _stateDeleteDialog
-
-    private val _messageResponse = MutableLiveData<String>()
-    val messageResponse: LiveData<String>
-        get() = _messageResponse
 
     val fullName = MutableLiveData<String>()
 
@@ -87,8 +83,7 @@ class EditProfileViewModel(
             delay(1000L)
             createEmployee.invoke(newEmployee) { employee, throwable ->
                 Log.d("Creat", employee.toString())
-                _stateAddNewDialog.postValue(false)
-                _messageResponse.postValue(employee.toString())
+                _stateAddNewDialog.postValue("name:${employee?.name}\nage:${employee?.age}\nsalary:${employee?.salary}")
             }
         }
 
@@ -115,8 +110,7 @@ class EditProfileViewModel(
                 delay(1000L)
                 updateEmployee.invoke(it) { employee, throwable ->
                     Log.d("Creat", employee.toString())
-                    _stateProgressDialog.postValue(false)
-                    _messageResponse.postValue(employee.toString())
+                    _stateUpdateDialog.postValue("name:${employee?.name}\nage:${employee?.age}\nsalary:${employee?.salary}")
                 }
             }
         }
@@ -146,8 +140,7 @@ class EditProfileViewModel(
         viewModelScope.cancel()
         _state.value = 0
         _stateAddNewDialog.value = null
-        _stateProgressDialog.value = null
-        _messageResponse.value = null
+        _stateUpdateDialog.value = null
         _stateDeleteDialog.value = null
     }
 

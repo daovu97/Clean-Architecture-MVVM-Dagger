@@ -58,9 +58,6 @@ class EditProfileActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.messageResponse.observe(this, Observer {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        })
     }
 
     private fun editStudentProfile() {
@@ -100,10 +97,14 @@ class EditProfileActivity : AppCompatActivity() {
                 },
                 onSuccess = { dialog ->
                     viewModel.stateAddNewDialog.observe(this, Observer {
-                        if (it == false) {
+                        it?.let {
                             dialog.dismiss()
-                            this.finish()
+                            alertResultDialog(it) {
+                                it.dismiss()
+                                this.finish()
+                            }
                         }
+
                     })
                 })
 
@@ -141,10 +142,13 @@ class EditProfileActivity : AppCompatActivity() {
     private fun updateDialog() {
         progressDialog("Updating",
             onSuccess = { dialog ->
-                viewModel.stateProgressDialog.observe(this, Observer {
-                    if (it == false) {
+                viewModel.stateUpdateDialog.observe(this, Observer {
+                    it?.let {
                         dialog.dismiss()
-                        this.finish()
+                        alertResultDialog(it) {
+                            it.dismiss()
+                            this.finish()
+                        }
                     }
                 })
             },
@@ -185,6 +189,21 @@ class EditProfileActivity : AppCompatActivity() {
 
         builder.setNegativeButton("No") { dialog, _ ->
             onNoClick(dialog)
+        }
+
+        val alert11 = builder.create()
+        alert11.show()
+    }
+
+    private fun alertResultDialog(
+        msg: String,
+        onYesClick: (DialogInterface) -> Unit
+    ) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(msg)
+        builder.setCancelable(true)
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            onYesClick(dialog)
         }
 
         val alert11 = builder.create()
