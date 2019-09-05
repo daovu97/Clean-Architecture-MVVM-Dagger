@@ -2,24 +2,23 @@
 
 package com.daovu65.employeemanager.edit
 
+import android.app.ProgressDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.daovu65.employeemanager.InjectionUtil
-import com.daovu65.employeemanager.databinding.ActivityEditProfileBinding
 import com.daovu65.employeemanager.Main.MainActivity
+import com.daovu65.employeemanager.databinding.ActivityEditProfileBinding
 import com.daovu65.employeemanager.profile.ProfileActivity
+import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.btn_back
-import androidx.appcompat.app.AlertDialog
-import android.content.DialogInterface
-import android.app.ProgressDialog
-import android.content.Intent
-import android.widget.Toast
-import androidx.lifecycle.Observer
-import com.jaeger.library.StatusBarUtil
 
 
 class EditProfileActivity : AppCompatActivity() {
@@ -40,7 +39,7 @@ class EditProfileActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         initView()
-        
+
     }
 
     private fun initView() {
@@ -119,17 +118,20 @@ class EditProfileActivity : AppCompatActivity() {
         alertDialog("Delete employee! Are you sure??",
             onYesClick = {
                 progressDialog("Deleting",
-                    onSuccess = { dialog ->
+                    onSuccess = { progressDialog ->
                         viewModel.deleteEmployee()
                         viewModel.stateDeleteDialog.observe(this, Observer {
                             it?.let {
-                                dialog.dismiss()
-                                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-                                val intent =
-                                    Intent(this@EditProfileActivity, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                this.startActivity(intent)
-                                this.finish()
+                                progressDialog.dismiss()
+                                alertResultDialog(it) { alertDialog ->
+                                    alertDialog.dismiss()
+                                    val intent =
+                                        Intent(this@EditProfileActivity, MainActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                    this.startActivity(intent)
+                                    this.finish()
+                                }
+
                             }
                         })
                     },

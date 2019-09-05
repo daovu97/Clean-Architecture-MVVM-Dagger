@@ -82,8 +82,16 @@ class EditProfileViewModel(
         viewModelScope.launch {
             delay(1000L)
             createEmployee.invoke(newEmployee) { employee, throwable ->
-                Log.d("Creat", employee.toString())
-                _stateAddNewDialog.postValue("name:${employee?.name}\nage:${employee?.age}\nsalary:${employee?.salary}")
+                employee?.let {
+                    Log.d("Create", it.toString())
+                    _stateAddNewDialog.postValue("name:${it.name}\nage:${it.age}\nsalary:${it.salary}")
+                }
+
+                throwable?.let {
+                    Log.d("Create", it.toString())
+                    _stateAddNewDialog.postValue("error!! Cannot create employee")
+                }
+
             }
         }
 
@@ -109,25 +117,41 @@ class EditProfileViewModel(
             viewModelScope.launch {
                 delay(1000L)
                 updateEmployee.invoke(it) { employee, throwable ->
-                    Log.d("Creat", employee.toString())
-                    _stateUpdateDialog.postValue("name:${employee?.name}\nage:${employee?.age}\nsalary:${employee?.salary}")
+                    employee?.let {
+                        Log.d("update", it.toString())
+                        _stateUpdateDialog.postValue("name:${it.name}\nage:${it.age}\nsalary:${it.salary}")
+                    }
+
+                    throwable?.let {
+                        Log.d("update", it.toString())
+                        _stateUpdateDialog.postValue("error!! Cannot update employee")
+                    }
+
                 }
             }
         }
 
     }
 
-
     fun deleteEmployee() {
         viewModelScope.launch {
             delay(1000L)
-            currentEmployee?.let {
-                deleteEmployee.invoke(it.id!!) { success, error ->
-                    _stateDeleteDialog.postValue(success)
+            currentEmployee?.let { employee ->
+                deleteEmployee.invoke(employee.id!!) { success, error ->
+                    success?.let {
+                        Log.d("Delete", it)
+                        _stateDeleteDialog.postValue(success)
+                    }
+
+                    error?.let {
+                        Log.d("Delete", it.toString())
+                        _stateDeleteDialog.postValue("error!! Cannot update employee")
+
+                    }
                 }
+
             }
         }
-
     }
 
     fun cancelJob() {
