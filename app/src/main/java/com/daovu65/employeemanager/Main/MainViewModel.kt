@@ -24,15 +24,16 @@ class MainViewModel(
 
     fun searchEmployeeByName(name: String) {
         viewModelScope.launch {
-            getAllEmployee.invoke { list, throwable ->
-                launch(Dispatchers.Default) {
-                    list?.let {
-                        _listEmployee.postValue(it.filter { employee ->
+            getAllEmployee.invoke { list, _ ->
+                list?.let {
+                    launch(Dispatchers.Default) {
+                        val value = it.filter { employee ->
                             employee.name == name
-                        })
+                        }
+                        _listEmployee.postValue(value)
+
                     }
                 }
-
 
             }
         }
