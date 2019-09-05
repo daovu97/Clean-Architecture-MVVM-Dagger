@@ -42,7 +42,10 @@ class MainViewModel(
         getAllEmployee.invoke { list, throwable ->
             list?.let {
                 _listEmployee.postValue(it)
+            }
 
+            throwable?.let {
+                _listEmployee.postValue(null)
             }
             _refreshState.postValue(false)
         }

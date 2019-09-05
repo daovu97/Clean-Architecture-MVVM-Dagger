@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.employeemanager.InjectionUtil
@@ -50,7 +51,12 @@ class MainActivity : AppCompatActivity() {
             adapter = mAdapter
             viewModel.getAllEmployee()
             viewModel.listEmployee.observe(this@MainActivity, Observer {
-                mAdapter.submitValue(it)
+                if (it == null) Toast.makeText(
+                    this@MainActivity,
+                    "No employee, please check internet!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                else mAdapter.submitValue(it)
             })
         }
         btn_add_new.setOnClickListener {
