@@ -8,7 +8,7 @@ import android.text.TextWatcher
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.employeemanager.InjectionUtil
-import com.daovu65.employeemanager.MainAdapter
+import com.daovu65.employeemanager.adapter.MainAdapter
 import com.daovu65.employeemanager.R
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.daovu65.employeemanager.profile.ProfileActivity
