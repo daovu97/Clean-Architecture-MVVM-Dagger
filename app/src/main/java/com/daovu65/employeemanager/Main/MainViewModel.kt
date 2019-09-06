@@ -22,6 +22,10 @@ class MainViewModel(
     val listEmployee: LiveData<List<Employee>>
         get() = _listEmployee
 
+    private val _numberEmployee = MutableLiveData<String>()
+    val numberEmployee: LiveData<String>
+        get() = _numberEmployee
+
     fun searchEmployeeByName(name: String) {
         viewModelScope.launch {
             getAllEmployee.invoke { list, _ ->
@@ -43,10 +47,12 @@ class MainViewModel(
         getAllEmployee.invoke { list, throwable ->
             list?.let {
                 _listEmployee.postValue(it)
+                _numberEmployee.postValue("Search: ${it.size} employee")
             }
 
             throwable?.let {
                 _listEmployee.postValue(null)
+                _numberEmployee.postValue("Search")
             }
             _refreshState.postValue(false)
         }
@@ -55,6 +61,7 @@ class MainViewModel(
     override fun onCleared() {
         viewModelScope.cancel()
         _refreshState.value = null
+        _numberEmployee.value = null
         super.onCleared()
 
     }

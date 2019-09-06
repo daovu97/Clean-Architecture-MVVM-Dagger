@@ -83,6 +83,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchByName() {
+        viewModel.numberEmployee.observe(this, Observer {
+            it?.let {
+                edt_search.hint = it
+            }
+        })
         edt_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0.isNullOrEmpty()) viewModel.getAllEmployee()

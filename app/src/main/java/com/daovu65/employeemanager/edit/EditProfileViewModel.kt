@@ -145,7 +145,7 @@ class EditProfileViewModel(
 
                     error?.let {
                         Log.d("Delete", it.toString())
-                        _stateDeleteDialog.postValue("error!! Cannot update employee")
+                        _stateDeleteDialog.postValue("error!! Cannot delete employee")
 
                     }
                 }
@@ -155,7 +155,7 @@ class EditProfileViewModel(
     }
 
     fun cancelJob() {
-        viewModelScope.cancel()
+        viewModelScope.coroutineContext.cancelChildren()
     }
 
     override fun onCleared() {
