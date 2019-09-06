@@ -1,4 +1,4 @@
-package com.daovu65.employeemanager
+package com.daovu65.employeemanager.injection
 
 import com.daovu65.employeeManager.data.repository.RepositoryImpl
 import com.daovu65.employeeManager.data.service.RetrofitFactory
@@ -47,14 +47,17 @@ object InjectionUtil {
     }
 
     fun inject(mainActivity: MainActivity) {
-        mainActivity.viewModelFactory = viewModelFactory
+        mainActivity.viewModelFactory =
+            viewModelFactory
     }
 
     fun inject(profileActivity: ProfileActivity) {
-        profileActivity.viewModelFactory = viewModelFactory
+        profileActivity.viewModelFactory =
+            viewModelFactory
     }
 
     fun inject(editProfileActivity: EditProfileActivity) {
-        editProfileActivity.viewModelFactory = viewModelFactory
+        editProfileActivity.viewModelFactory =
+            viewModelFactory
     }
 }

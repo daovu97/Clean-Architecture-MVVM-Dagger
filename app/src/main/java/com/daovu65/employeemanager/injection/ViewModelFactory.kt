@@ -1,4 +1,4 @@
-package com.daovu65.employeemanager
+package com.daovu65.employeemanager.injection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -3,15 +3,14 @@ package com.daovu65.employeemanager.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.daovu65.employeemanager.InjectionUtil
+import com.daovu65.employeemanager.injection.InjectionUtil
 import com.daovu65.employeemanager.R
 import com.daovu65.employeemanager.databinding.ActivityProfileBinding
 import com.daovu65.employeemanager.Main.MainActivity
-import com.daovu65.employeemanager.ViewModelFactory
+import com.daovu65.employeemanager.injection.ViewModelFactory
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_profile.*

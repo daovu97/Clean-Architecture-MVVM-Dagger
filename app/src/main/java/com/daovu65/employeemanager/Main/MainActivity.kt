@@ -8,10 +8,10 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.daovu65.employeemanager.InjectionUtil
+import com.daovu65.employeemanager.injection.InjectionUtil
 import com.daovu65.employeemanager.adapter.MainAdapter
 import com.daovu65.employeemanager.R
-import com.daovu65.employeemanager.ViewModelFactory
+import com.daovu65.employeemanager.injection.ViewModelFactory
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.daovu65.employeemanager.profile.ProfileActivity
 import com.jaeger.library.StatusBarUtil

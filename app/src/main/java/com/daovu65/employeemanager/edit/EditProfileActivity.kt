@@ -12,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.daovu65.employeemanager.InjectionUtil
+import com.daovu65.employeemanager.injection.InjectionUtil
 import com.daovu65.employeemanager.Main.MainActivity
-import com.daovu65.employeemanager.ViewModelFactory
+import com.daovu65.employeemanager.injection.ViewModelFactory
 import com.daovu65.employeemanager.databinding.ActivityEditProfileBinding
 import com.daovu65.employeemanager.profile.ProfileActivity
 import com.jaeger.library.StatusBarUtil
