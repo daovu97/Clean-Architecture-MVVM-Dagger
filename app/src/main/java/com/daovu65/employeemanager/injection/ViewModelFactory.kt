@@ -1,5 +1,6 @@
 package com.daovu65.employeemanager.injection
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.daovu65.employeeManager.domain.interacter.*
@@ -10,6 +11,7 @@ import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
+    private val activity: AppCompatActivity,
     private val updateEmployee: UpdateEmployee,
     private val deleteEmployee: DeleteEmployee,
     private val createEmployee: CreateEmployee,
