@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        StatusBarUtil.setTranslucent(this, 30)
         recycler_container.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             mAdapter = MainAdapter(this@MainActivity) {

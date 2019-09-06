@@ -32,7 +32,6 @@ class ProfileActivity : AppCompatActivity() {
         viewModel = viewModelFactory.create(ProfileViewModel::class.java)
         val binding: ActivityProfileBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_profile)
-        StatusBarUtil.setTranslucent(this, 30)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

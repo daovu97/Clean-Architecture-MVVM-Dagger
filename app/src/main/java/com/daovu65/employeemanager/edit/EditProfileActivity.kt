@@ -44,7 +44,6 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        StatusBarUtil.setTranslucent(this, 30)
         intent.extras?.let { bundle ->
             when (bundle.get(MainActivity.BUNDLE_EDIT_PROFILE)) {
                 MainActivity.BUNDLE_ADD_NEW -> viewModel.setState(1)
