@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.employeemanager.InjectionUtil
 import com.daovu65.employeemanager.adapter.MainAdapter
 import com.daovu65.employeemanager.R
+import com.daovu65.employeemanager.ViewModelFactory
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.daovu65.employeemanager.profile.ProfileActivity
 import com.jaeger.library.StatusBarUtil
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var viewModel: MainViewModel
-    lateinit var viewModelFactory: MainVMFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var mAdapter: MainAdapter
     override fun onCreate(savedInstanceState: Bundle?) {

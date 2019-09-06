@@ -11,11 +11,12 @@ import com.daovu65.employeemanager.InjectionUtil
 import com.daovu65.employeemanager.R
 import com.daovu65.employeemanager.databinding.ActivityProfileBinding
 import com.daovu65.employeemanager.Main.MainActivity
+import com.daovu65.employeemanager.ViewModelFactory
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_profile.*
 
-class ProfileActivity : AppCompatActivity(){
+class ProfileActivity : AppCompatActivity() {
 
     companion object {
         const val BUNDLE_EDIT_PROFILE = "BUNDLE_EDIT_PROFILE"
@@ -23,7 +24,7 @@ class ProfileActivity : AppCompatActivity(){
     }
 
     private lateinit var viewModel: ProfileViewModel
-    lateinit var viewModelFactory: ProfileVMFactory
+    lateinit var viewModelFactory: ViewModelFactory
     private var currentStudentId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +33,14 @@ class ProfileActivity : AppCompatActivity(){
         viewModel = viewModelFactory.create(ProfileViewModel::class.java)
         val binding: ActivityProfileBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_profile)
-        StatusBarUtil.setTranslucent(this,30)
+        StatusBarUtil.setTranslucent(this, 30)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         initView()
     }
 
-    private fun initView(){
+    private fun initView() {
         intent.extras?.let { bundle ->
             currentStudentId = bundle.getString(MainActivity.BUNDLE_PROFILE_ID)
             currentStudentId?.let {

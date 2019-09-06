@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.daovu65.employeemanager.InjectionUtil
 import com.daovu65.employeemanager.Main.MainActivity
+import com.daovu65.employeemanager.ViewModelFactory
 import com.daovu65.employeemanager.databinding.ActivityEditProfileBinding
 import com.daovu65.employeemanager.profile.ProfileActivity
 import com.jaeger.library.StatusBarUtil
@@ -25,7 +26,7 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private lateinit var viewModel: EditProfileViewModel
-    lateinit var viewModelFactory: EditProfileVMFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         InjectionUtil.inject(this)
