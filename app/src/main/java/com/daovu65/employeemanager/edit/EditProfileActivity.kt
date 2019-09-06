@@ -59,6 +59,7 @@ class EditProfileActivity : AppCompatActivity() {
             when (it) {
                 1 -> addNewStudent()
                 2 -> editStudentProfile()
+                else -> throw IllegalArgumentException("Cannot find view")
             }
         })
     }
