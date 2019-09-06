@@ -49,19 +49,19 @@ object InjectionUtil {
         )
     }
 
-    fun inject(mainActivity: MainActivity) {
+    internal fun inject(mainActivity: MainActivity) {
         activity = mainActivity
         mainActivity.viewModelFactory =
             viewModelFactory
     }
 
-    fun inject(profileActivity: ProfileActivity) {
+    internal fun inject(profileActivity: ProfileActivity) {
         activity = profileActivity
         profileActivity.viewModelFactory =
             viewModelFactory
     }
 
-    fun inject(editProfileActivity: EditProfileActivity) {
+    internal fun inject(editProfileActivity: EditProfileActivity) {
         activity = editProfileActivity
         editProfileActivity.viewModelFactory =
             viewModelFactory
