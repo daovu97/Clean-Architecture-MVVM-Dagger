@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.daovu65.employeeManager.domain.entity.Employee
 import com.daovu65.employeeManager.domain.interacter.GetEmployeeById
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel(
+class ProfileViewModel @Inject constructor(
     private val getEmployeeById: GetEmployeeById
 ) : ViewModel() {
 

@@ -1,16 +1,24 @@
 package com.daovu65.employeeManager.data.repository
 
+import com.daovu65.employeeManager.data.mapper.CreateResponeToEmployee
+import com.daovu65.employeeManager.data.mapper.EmployeeEntityToEmployee
+import com.daovu65.employeeManager.data.mapper.EmployeeToCreateResponse
+import com.daovu65.employeeManager.data.mapper.EmployeeToEmployeeEntity
 import com.daovu65.employeeManager.data.service.ApiService
-import com.daovu65.employeeManager.data.mapper.Convert
 import com.daovu65.employeeManager.domain.entity.Employee
 import com.daovu65.employeeManager.domain.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RepositoryImpl(
-    private val apiService: ApiService
+class RepositoryImpl @Inject constructor(
+    private val apiService: ApiService,
+    private val createResponeToEmployee: CreateResponeToEmployee,
+    private val employeeToCreateResponse: EmployeeToCreateResponse,
+    private val employeeToEmployeeEntity: EmployeeToEmployeeEntity,
+    private val employeeEntityToEmployee: EmployeeEntityToEmployee
 ) : Repository {
     override suspend fun createEmployee(
         employee: Employee,
@@ -19,11 +27,11 @@ class RepositoryImpl(
         launch {
             try {
                 val value = apiService.creatEmployee(
-                    Convert.employeeToCreateResponse(
+                    employeeToCreateResponse.map(
                         employee
                     )
                 )
-                result(Convert.createResponeToEmployee(value), null)
+                result(createResponeToEmployee.map(value), null)
             } catch (e: Throwable) {
                 result(null, e)
             }
@@ -35,7 +43,7 @@ class RepositoryImpl(
             launch {
                 try {
                     result(
-                        Convert.employeeEntityToEmployee(
+                        employeeEntityToEmployee.map(
                             apiService.getEmployee(id)
                         ), null
                     )
@@ -70,12 +78,11 @@ class RepositoryImpl(
             try {
                 employee.id?.let {
                     val value =
-                        apiService.updateEmployee(it,
-                            Convert.employeeToCreateResponse(
-                                employee
-                            )
+                        apiService.updateEmployee(
+                            it,
+                            employeeToCreateResponse.map(employee)
                         )
-                    result(Convert.createResponeToEmployee(value), null)
+                    result(createResponeToEmployee.map(value), null)
                 }
 
             } catch (e: Throwable) {
@@ -89,7 +96,7 @@ class RepositoryImpl(
             launch {
                 try {
                     result(apiService.getAllEmployee().map {
-                        Convert.employeeEntityToEmployee(it)
+                        employeeEntityToEmployee.map(it)
                     }, null)
                 } catch (e: Throwable) {
                     result(null, e)

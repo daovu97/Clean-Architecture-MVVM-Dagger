@@ -10,9 +10,13 @@ import com.daovu65.employeeManager.domain.interacter.CreateEmployee
 import com.daovu65.employeeManager.domain.interacter.DeleteEmployee
 import com.daovu65.employeeManager.domain.interacter.GetEmployeeById
 import com.daovu65.employeeManager.domain.interacter.UpdateEmployee
-import kotlinx.coroutines.*
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditProfileViewModel(
+class EditProfileViewModel @Inject constructor(
     private val updateEmployee: UpdateEmployee,
     private val deleteEmployee: DeleteEmployee,
     private val createEmployee: CreateEmployee,

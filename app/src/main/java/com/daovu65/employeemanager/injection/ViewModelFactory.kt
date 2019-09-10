@@ -1,48 +1,48 @@
 package com.daovu65.employeemanager.injection
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.daovu65.employeeManager.domain.interacter.*
-import com.daovu65.employeemanager.Main.MainViewModel
-import com.daovu65.employeemanager.edit.EditProfileViewModel
-import com.daovu65.employeemanager.profile.ProfileViewModel
-import java.lang.IllegalArgumentException
+import dagger.MapKey
+import java.lang.annotation.Documented
+import javax.inject.Inject
+import javax.inject.Provider
+import javax.inject.Singleton
+import kotlin.reflect.KClass
 
+@Suppress("DEPRECATED_JAVA_ANNOTATION")
+@Documented
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+@MapKey
+internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
+
+@Singleton
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory(
-    private val activity: AppCompatActivity,
-    private val updateEmployee: UpdateEmployee,
-    private val deleteEmployee: DeleteEmployee,
-    private val createEmployee: CreateEmployee,
-    private val getEmployeeById: GetEmployeeById,
-    private val getAllEmployee: GetAllEmployee
+class ViewModelFactory @Inject constructor(
+    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        when {
-            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
-                return EditProfileViewModel(
-                    createEmployee = createEmployee,
-                    updateEmployee = updateEmployee,
-                    deleteEmployee = deleteEmployee,
-                    getEmployeeById = getEmployeeById
-                ) as T
-            }
 
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                return MainViewModel(
-                    getAllEmployee = getAllEmployee
-                ) as T
-            }
+        var creator: Provider<out ViewModel>? = creators[modelClass]
 
-            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
-                return ProfileViewModel(
-                    getEmployeeById = getEmployeeById
-                ) as T
+        if (creator == null) {
+            for ((key, value) in creators) {
+                if (modelClass.isAssignableFrom(key)) {
+                    creator = value
+                    break
+                }
             }
-
-            else -> throw IllegalArgumentException("Unknown ViewModel class")
         }
+
+        requireNotNull(creator) { "unknown model class $modelClass" }
+
+        return try {
+            creator.run { get() } as T
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+
+
     }
 
 }

@@ -1,22 +1,25 @@
 package com.daovu65.employeemanager.Main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.daovu65.employeemanager.injection.InjectionUtil
-import com.daovu65.employeemanager.adapter.MainAdapter
 import com.daovu65.employeemanager.R
-import com.daovu65.employeemanager.injection.ViewModelFactory
+import com.daovu65.employeemanager.adapter.MainAdapter
 import com.daovu65.employeemanager.edit.EditProfileActivity
+import com.daovu65.employeemanager.injection.DaggerMyComponent
+import com.daovu65.employeemanager.injection.ViewModelFactory
 import com.daovu65.employeemanager.profile.ProfileActivity
-import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -25,12 +28,13 @@ class MainActivity : AppCompatActivity() {
         const val BUNDLE_ADD_NEW = "BUNDLE_ADD_NEW"
     }
 
-    private lateinit var viewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
+    @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var mAdapter: MainAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
-        InjectionUtil.inject(this)
+        DaggerMyComponent.builder().build().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = viewModelFactory.create(MainViewModel::class.java)

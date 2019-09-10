@@ -12,24 +12,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.daovu65.employeemanager.injection.InjectionUtil
 import com.daovu65.employeemanager.Main.MainActivity
-import com.daovu65.employeemanager.injection.ViewModelFactory
 import com.daovu65.employeemanager.databinding.ActivityEditProfileBinding
+import com.daovu65.employeemanager.injection.DaggerMyComponent
+import com.daovu65.employeemanager.injection.ViewModelFactory
 import com.daovu65.employeemanager.profile.ProfileActivity
-import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.btn_back
+import javax.inject.Inject
 
 
 class EditProfileActivity : AppCompatActivity() {
 
 
-    private lateinit var viewModel: EditProfileViewModel
+    lateinit var viewModel: EditProfileViewModel
+    @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        InjectionUtil.inject(this)
+        DaggerMyComponent.builder().build().inject(this)
         super.onCreate(savedInstanceState)
         viewModel = viewModelFactory.create(EditProfileViewModel::class.java)
         val binding: ActivityEditProfileBinding =

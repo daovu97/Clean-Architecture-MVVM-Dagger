@@ -9,8 +9,9 @@ import com.daovu65.employeeManager.domain.interacter.GetAllEmployee
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(
+class MainViewModel @Inject constructor(
     private val getAllEmployee: GetAllEmployee
 ) : ViewModel() {
 

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
@@ -46,4 +47,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation "com.squareup.okhttp3:logging-interceptor:4.1.0"
     implementation "com.squareup.okhttp3:okhttp:4.1.0"
+
+    def dagger_vesion = "2.24"
+    implementation "com.google.dagger:dagger:$dagger_vesion"
+    kapt "com.google.dagger:dagger-compiler:$dagger_vesion"
+
+    implementation "com.google.dagger:dagger-android:$dagger_vesion"
+    implementation "com.google.dagger:dagger-android-support:$dagger_vesion" // if you use the support libraries
+    kapt "com.google.dagger:dagger-android-processor:$dagger_vesion"
 }
