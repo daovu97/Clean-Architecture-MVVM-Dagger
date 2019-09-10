@@ -21,7 +21,11 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.btn_back
 import javax.inject.Inject
 
-
+/**
+- EditProfileActivity.kt
+- @Author: daovu
+- @Date_created: 2019-09-10
+*/
 class EditProfileActivity : AppCompatActivity() {
 
 
