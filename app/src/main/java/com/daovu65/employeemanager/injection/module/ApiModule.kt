@@ -19,11 +19,13 @@ class ApiModule {
     }
 
     @Provides
+    @Singleton
     fun provideGson(): Gson = GsonBuilder()
         .setLenient()
         .create()
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient().newBuilder()
         .readTimeout(10000, TimeUnit.MILLISECONDS)
         .writeTimeout(10000, TimeUnit.MILLISECONDS)
