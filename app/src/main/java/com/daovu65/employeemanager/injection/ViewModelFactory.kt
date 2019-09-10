@@ -32,6 +32,7 @@ class ViewModelFactory @Inject constructor(
                     break
                 }
             }
+
         }
 
         requireNotNull(creator) { "unknown model class $modelClass" }
