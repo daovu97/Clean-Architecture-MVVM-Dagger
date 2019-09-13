@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daovu65.employeeManager.domain.interacter.GetAllEmployee
 import com.daovu65.employeeManager.domain.interacter.GetEmployeeById
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    private val getEmployeeById: GetEmployeeById
+    private val getEmployeeById: GetEmployeeById,
+    private val getAllEmployee: GetAllEmployee
 ) : ViewModel() {
 
     private val _currentEmployeeId = MutableLiveData<String>()
@@ -49,7 +51,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     override fun onCleared() {
+        viewModelScope.coroutineContext.cancel()
         super.onCleared()
-        viewModelScope.cancel()
     }
+
 }

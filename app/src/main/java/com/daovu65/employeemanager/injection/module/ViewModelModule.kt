@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.daovu65.employeemanager.Main.MainViewModel
 import com.daovu65.employeemanager.edit.EditProfileViewModel
 import com.daovu65.employeemanager.injection.ViewModelFactory
-import com.daovu65.employeemanager.injection.ViewModelKey
+import com.daovu65.employeemanager.injection.util.ViewModelKey
 import com.daovu65.employeemanager.profile.ProfileViewModel
 import dagger.Binds
 import dagger.Module

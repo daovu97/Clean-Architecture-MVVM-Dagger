@@ -6,10 +6,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.employeemanager.R
 import com.daovu65.employeemanager.adapter.MainAdapter
+import com.daovu65.employeemanager.base.BaseActivity
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.daovu65.employeemanager.injection.DaggerMyComponent
 import com.daovu65.employeemanager.injection.ViewModelFactory
@@ -19,25 +21,34 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainViewModel>() {
+
+
     companion object {
         const val BUNDLE_PROFILE_ID = "BUNDLE_PROFILE_ID"
         const val BUNDLE_EDIT_PROFILE = "BUNDLE_EDIT_PROFILE"
         const val BUNDLE_ADD_NEW = "BUNDLE_ADD_NEW"
     }
 
-    lateinit var viewModel: MainViewModel
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var mAdapter: MainAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun getViewModel(): MainViewModel {
         DaggerMyComponent.builder().build().inject(this)
+        return viewModelFactory.create(MainViewModel::class.java)
+
+    }
+
+    private val viewModel = getViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = viewModelFactory.create(MainViewModel::class.java)
         initView()
         searchByName()
         swipeToRefresh()

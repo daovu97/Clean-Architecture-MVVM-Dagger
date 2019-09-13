@@ -64,6 +64,5 @@ class MainViewModel @Inject constructor(
         _refreshState.value = null
         _numberEmployee.value = null
         super.onCleared()
-
     }
 }

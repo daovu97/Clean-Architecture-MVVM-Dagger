@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.daovu65.employeemanager.Main.MainActivity
 import com.daovu65.employeemanager.R
+import com.daovu65.employeemanager.base.BaseActivity
 import com.daovu65.employeemanager.databinding.ActivityProfileBinding
 import com.daovu65.employeemanager.edit.EditProfileActivity
 import com.daovu65.employeemanager.injection.DaggerMyComponent
@@ -15,22 +16,26 @@ import com.daovu65.employeemanager.injection.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_profile.*
 import javax.inject.Inject
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity<ProfileViewModel>() {
 
     companion object {
         const val BUNDLE_EDIT_PROFILE = "BUNDLE_EDIT_PROFILE"
         const val BUNDLE_PROFILE_ID = "BUNDLE_PROFILE_ID"
     }
 
-    lateinit var viewModel: ProfileViewModel
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var currentStudentId: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun getViewModel(): ProfileViewModel {
         DaggerMyComponent.builder().build().inject(this)
+        return viewModelFactory.create(ProfileViewModel::class.java)
+    }
+    private val viewModel = getViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        viewModel = viewModelFactory.create(ProfileViewModel::class.java)
         val binding: ActivityProfileBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_profile)
 

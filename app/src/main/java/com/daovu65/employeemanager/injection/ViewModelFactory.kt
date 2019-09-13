@@ -9,13 +9,6 @@ import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.reflect.KClass
 
-@Suppress("DEPRECATED_JAVA_ANNOTATION")
-@Documented
-@Target(AnnotationTarget.FUNCTION)
-@Retention(AnnotationRetention.RUNTIME)
-@MapKey
-internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
-
 @Singleton
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory @Inject constructor(

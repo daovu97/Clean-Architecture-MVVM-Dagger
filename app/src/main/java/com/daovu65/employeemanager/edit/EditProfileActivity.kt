@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.daovu65.employeemanager.Main.MainActivity
+import com.daovu65.employeemanager.base.BaseActivity
 import com.daovu65.employeemanager.databinding.ActivityEditProfileBinding
 import com.daovu65.employeemanager.injection.DaggerMyComponent
 import com.daovu65.employeemanager.injection.ViewModelFactory
@@ -25,18 +26,22 @@ import javax.inject.Inject
 - EditProfileActivity.kt
 - @Author: daovu
 - @Date_created: 2019-09-10
-*/
-class EditProfileActivity : AppCompatActivity() {
+ */
+class EditProfileActivity : BaseActivity<EditProfileViewModel>() {
 
-
-    lateinit var viewModel: EditProfileViewModel
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun getViewModel(): EditProfileViewModel {
         DaggerMyComponent.builder().build().inject(this)
+        return viewModelFactory.create(EditProfileViewModel::class.java)
+    }
+
+    private val viewModel = getViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        viewModel = viewModelFactory.create(EditProfileViewModel::class.java)
         val binding: ActivityEditProfileBinding =
             DataBindingUtil.setContentView(
                 this,

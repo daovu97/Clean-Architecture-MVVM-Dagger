@@ -7,10 +7,17 @@ import com.daovu65.employeemanager.injection.module.RepositoryModule
 import com.daovu65.employeemanager.injection.module.ViewModelModule
 import com.daovu65.employeemanager.profile.ProfileActivity
 import dagger.Component
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ViewModelModule::class, RepositoryModule::class, ApiModule::class])
+@Component(
+    modules = [
+        AndroidSupportInjectionModule::class,
+        ViewModelModule::class,
+        RepositoryModule::class,
+        ApiModule::class]
+)
 interface MyComponent {
     fun inject(activity: MainActivity)
     fun inject(activity: ProfileActivity)
